@@ -61,9 +61,11 @@ for qm in data:
             points.append((count, datum))
             count += 1
 #        plt.plot(points, color[n])
+        plt.title(qm)
         plt.plot(points)
+        plt.ylabel("Coefficienct per set of quests")
+        plt.xlabel("Quests available for class range")
 #        plt.savefig('{0}_{1}.png'.format(qm, n))
         n += 1
-    #plt.ylabel("{0}".format(qm))
     plt.show()
     plt.clf()
