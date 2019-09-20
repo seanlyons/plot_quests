@@ -29,18 +29,36 @@ Lady-Undya fourth 4 4 4 4 5 5 5 5 5 6 6 6 6 6 7 7 7 8 8 8 9 10 10 10 11 12 13 14
 Lady-Undya first 4 4 6 7 7 8 9 13 15 17 19 26 44 46 46 47 49 50 50 51 53 53 55 56 56 56 56 56 56 57 58 59 59 59 60 60 61 63 63 63 64 64 65 65 67 67 68 69 69 70 71 71 71 72 72 73 73 73 74 74 74 74 75 75 76 77 77 77 77 78 78 78 79 79 79 79 79 80 80 81 81 81 82 84 85 89
 Lady-Undya third 3 6 7 8 8 9 9 11 12 13 13 15 20 23 23 23 23 24 27 28 30 39 40 42 43 44 45 45 52 52 53 54 56 67'''
 lines = data.split('\n')
+full_set = {}
 for line in lines:
     words = line.split(' ')
     lord = words.pop(0)
     class_num = words.pop(0)
 
-    points = []
-    count = 0
-    for word in words:
-        points.append((count, int(word)))
-        count += 1
+    if lord not in full_set:
+        full_set[lord] = {}
+    if class_num not in full_set[lord]:
+        full_set[lord][class_num] = []
 
-    #pdb.set_trace()
-    plt.plot(points)
-    plt.ylabel("{0} @ {1} class".format(lord.replace("-", " "), class_num))
-    plt.savefig('{0}_{1}.png'.format(lord, class_num))
+    for word in words:
+        full_set[lord][class_num].append(int(word))
+
+classes = {'second': 'y', 'third': 'g', 'fourth': 'b'}
+for qm in full_set:
+    if 'first' in qm:
+        points = []
+        count = 0
+        for datum in full_set[qm]['first']:
+            print('plotting for {0}'.format(qm))
+            points.append((count, datum))
+            plt.plot(points, 'r')
+    for class_num in classes:
+        count = 0
+        points = []
+        for datum in full_set[qm][class_num]:
+            print('plotting for {0} ({1})'.format(qm, class_num))
+            points.append((count, datum))
+            plt.plot(points, classes[class_num])
+            
+    plt.ylabel("{0}".format(lord.replace("-", " ")))
+    plt.savefig('{0}.png'.format(lord))
