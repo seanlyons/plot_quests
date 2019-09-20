@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pdb
+import sys
 
 color = ['r', 'g', 'b', 'y']
 data = {
@@ -47,25 +48,22 @@ data = {
     }
 }
 
-    for word in words:
-        full_set[lord][class_num].append(int(word))
+plt.savefig('baseline.png')
 
-classes = {'second': 'y', 'third': 'g', 'fourth': 'b'}
-for qm in full_set:
-    if 'first' in qm:
-        points = []
-        count = 0
-        for datum in full_set[qm]['first']:
-            print('plotting for {0}'.format(qm))
-            points.append((count, datum))
-            plt.plot(points, 'r')
-    for class_num in classes:
+t = 0
+for qm in data:
+    n = 0
+    for class_num in data[qm]:
+        t += 1
         count = 0
         points = []
-        for datum in full_set[qm][class_num]:
-            print('plotting for {0} ({1})'.format(qm, class_num))
+        for datum in data[qm][class_num]:
             points.append((count, datum))
-            plt.plot(points, classes[class_num])
-            
-    plt.ylabel("{0}".format(lord.replace("-", " ")))
-    plt.savefig('{0}.png'.format(lord))
+            count += 1
+#        plt.plot(points, color[n])
+        plt.plot(points)
+#        plt.savefig('{0}_{1}.png'.format(qm, n))
+        n += 1
+    #plt.ylabel("{0}".format(qm))
+    plt.show()
+    plt.clf()
